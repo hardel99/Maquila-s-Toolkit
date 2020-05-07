@@ -1,0 +1,10 @@
+*{
+    align-items: center;
+    text-align: center;
+}
+
+form{
+    display: flex;
+    margin-left: auto;
+    max-width: 1200px;
+}
