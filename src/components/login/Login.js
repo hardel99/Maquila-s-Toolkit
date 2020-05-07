@@ -8,10 +8,10 @@ const Login = ({ history }) => {
         event.preventDefault();
         const { email, password } = event.target.elements;
         try {
-            firebase.login( email.value, password.value);
+            await firebase.login( email.value, password.value);
             history.push("/");
         } catch (error) {
-            alert(error.message)
+            alert(error.message);
         }
     }, [history]);
 
@@ -39,5 +39,16 @@ const Login = ({ history }) => {
         </div>
     );
 }
+
+
+/**
+ * !TO-DO:
+ *  ?Log-in with Google account
+ *  ?Forget password?
+ *  ?Remember me
+ * 
+ * !Errors:
+ *  *Sometimes don't log-in because yes
+ */
 
 export default withRouter(Login);

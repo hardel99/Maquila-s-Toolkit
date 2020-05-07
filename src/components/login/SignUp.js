@@ -7,7 +7,8 @@ const SignUp = ({ history }) => {
         event.preventDefault();
         const { name, email, password } = event.target.elements;
         try {
-            firebase.register(name.value, email.value, password.value);
+            await firebase.register(name.value, email.value, password.value);
+
             history.push("/");
         } catch (error) {
             alert(error.message)
@@ -36,5 +37,11 @@ const SignUp = ({ history }) => {
         </div>
     );
 }
+
+/**
+ * !TO-DO:
+ *  ?Sign-Up with Google Account
+ *  ?Confirmation e-mail?
+ */
 
 export default withRouter(SignUp);
