@@ -15,9 +15,10 @@ const Login = ({ history }) => {
         }
     }, [history]);
 
-    const { currentuser } = useContext(AuthContext);
+    const { currentUser } = useContext(AuthContext);
 
-    if (currentuser) {
+    //?Comentar este if a la hora de diseñar el login
+    if (currentUser) {
         return <Redirect to='/' />
     }
 
@@ -34,7 +35,7 @@ const Login = ({ history }) => {
                     <input name="password" type="password" placeholder="Password" />
                 </label>
                 <button type="submit">Log in!</button>
-                <button><Link to="/login/SignUp">or Sign Up here!</Link></button>
+                <button><Link to="/signup">or Sign Up here!</Link></button>
             </form>
         </div>
     );
