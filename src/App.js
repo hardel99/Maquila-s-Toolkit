@@ -1,11 +1,10 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Home from './home/Home';
-import Login from './login/Login';
-import SignUp from './login/SignUp';
-import { AuthProvider } from './Auth';
-import PrivateRoute from './PrivateRoute';
+import { Home, Login, SignUp } from './components'
+import { AuthProvider } from './firebase/Auth';
+import PrivateRoute from './firebase/PrivateRoute';
 
+import styles from './App.module.css'
 
 const App = () => {
     return (

@@ -1,7 +1,7 @@
 import React, { useContext, useCallback } from 'react';
-import firebase from '../../firebase';
+import firebase from '../../firebase/firebase';
 import { withRouter, Redirect, Link } from 'react-router-dom';
-import { AuthContext } from '../Auth';
+import { AuthContext } from '../../firebase/Auth';
 
 const Login = ({ history }) => {
     const handleLogin = useCallback(async event => {
