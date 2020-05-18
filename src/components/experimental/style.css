@@ -1,0 +1,116 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #fff;
+  font-family: "Roboto", "Console", "Arial", "Helvetica", "sans-serif";
+  font-weight: lighter;
+}
+
+.container {
+  position: relative;
+  top: 255px;
+  width: 90%;
+  height: 450px;
+  margin: auto;
+  display: flex;
+}
+
+h2 {
+  text-align: center;
+  padding: 5px 2px;
+  margin: 30px;
+}
+
+.login-panel,
+.signup-panel {
+  display: inline-block;
+  flex: 1;
+  padding: 10px 20px;
+  border: 3px solid green;
+  border-radius: 10px;
+  margin: 10px;
+}
+
+form {
+  margin-top: 70px;
+}
+
+ul {
+  text-decoration: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul li {
+  margin: 20px 0;
+}
+
+input {
+  width: 100%;
+  padding: 10px 5px;
+}
+
+input[type="button"] {
+  width: 80px;
+}
+
+span {
+  display: block;
+  text-decoration: underline;
+  color: darkred;
+  margin: 20px 0;
+}
+
+span:hover {
+  cursor: pointer;
+}
+
+.hidden-img {
+  display: block;
+  position: absolute;
+  width: 95%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
+
+#cover {
+  width: 100%;
+  clip-path: inset(0 50% 0 0);
+}
+
+.signUp {
+  animation: toSign 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+.logIn {
+  animation: toLog 0.5s ease-in-out;
+  animation-fill-mode: forwards;
+}
+
+@keyframes toSign {
+  from {
+    clip-path: inset(0 0 0 50%);
+  }
+
+  to {
+    clip-path: inset(0 50% 0 0);
+  }
+}
+
+@keyframes toLog {
+  from {
+    clip-path: inset(0 50% 0 0);
+  }
+
+  to {
+    clip-path: inset(0 0 0 50%);
+  }
+}
