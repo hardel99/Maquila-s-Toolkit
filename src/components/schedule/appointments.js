@@ -30,9 +30,21 @@ export const appointments = [
         endDate: '2020-06-04T14:30',
     },
     {
-        id: 5,
-        title: 'Juegar sin yo 2 ',
-        startDate: '2020-06-04T15:30',
-        endDate: '2020-06-04T20:00',
+        id: 6,
+        title: 'Porque hay que trabajar ._.',
+        startDate: '2020-06-05T10:30',
+        endDate: '2020-06-05T14:30',
+    },
+    {
+        id: 7,
+        title: 'The time is now!',
+        startDate: '2020-06-06T10:30',
+        endDate: '2020-06-06T20:00',
+    },
+    {
+        id: 8,
+        title: 'Ojala ya se acabe ._.',
+        startDate: '2020-06-07T10:30',
+        endDate: '2020-06-07T20:00',
     }
 ];
