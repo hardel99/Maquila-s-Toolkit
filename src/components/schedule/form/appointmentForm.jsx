@@ -1,58 +1,12 @@
 import React from 'react';
 import { AppointmentForm } from '@devexpress/dx-react-scheduler-material-ui';
 import { IconButton, TextField, Button } from '@material-ui/core';
-import { Close, Notes, Create, CalendarToday, LocationOn } from '@material-ui/icons';
-import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/picker';
-import { withStyle } from '@material-ui/core/styles';
+import { Close, Create, CalendarToday } from '@material-ui/icons';
+// import { Notes, LocationOn } from '@material-ui/icons';
+import { MuiPickersUtilsProvider, KeyboardDateTimePicker } from '@material-ui/pickers';
 import MomentUtils from '@date-io/moment';
 
-const containerStyles = theme => ({
-    container: {
-        width: theme.spacing(68),
-        padding: 0,
-        paddingBottom: theme.spacing(2),
-    },
-    content: {
-        padding: theme.spacing(2),
-        paddingTop: 0,
-    },
-    header: {
-        overflow: 'hidden',
-        paddingTop: theme.spacing(0.5),
-    },
-    closeButton: {
-        float: 'right',
-    },
-    buttonGroup: {
-        display: 'flex',
-        justifyContent: 'flex-end',
-        padding: theme.spacing(0, 2),
-    },
-    button: {
-        marginLeft: theme.spacing(2),
-    },
-    picker: {
-        marginRight: theme.spacing(2),
-        '&:last-child': {
-            marginRight: 0,
-        },
-        width: '50%',
-    },
-    wrapper: {
-        display: 'flex',
-        justifyContent: 'space-between',
-        padding: theme.spacing(1, 0),
-    },
-    icon: {
-        margin: theme.spacing(2, 0),
-        marginRight: theme.spacing(2),
-    },
-    textField: {
-        width: '100%',
-    },
-});
-
-class AppointmentFormContainerBasic extends React.PureComponent {
+export class AppointmentFormContainerBasic extends React.Component {
     constructor(props) {
         super(props);
 
@@ -190,7 +144,8 @@ class AppointmentFormContainerBasic extends React.PureComponent {
                                 />
                             </MuiPickersUtilsProvider>
                         </div>
-                        <div className={classes.wrapper}>
+                        {/* ? Later we could try */}
+                        {/* <div className={classes.wrapper}>
                             <LocationOn className={classes.icon} color="action" />
                             <TextField
                                 {...textEditorProps('location')}
@@ -203,7 +158,7 @@ class AppointmentFormContainerBasic extends React.PureComponent {
                                 multiline
                                 rows="6"
                             />
-                        </div>
+                        </div> */}
                     </div>
                     <div className={classes.buttonGroup}>
                         {!isNewAppointment && (
@@ -237,4 +192,4 @@ class AppointmentFormContainerBasic extends React.PureComponent {
     }
 }
 
-export default withStyle(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
+//export default withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);

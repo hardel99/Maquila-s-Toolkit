@@ -1,9 +1,10 @@
 import React from 'react';
 import Paper from '@material-ui/core/Paper'
-import { ViewState, EditingState, IntegratedEditing } from '@devexpress/dx-react-scheduler';
+import { ViewState, EditingState } from '@devexpress/dx-react-scheduler';
 import { connectProps } from '@devexpress/dx-react-core';
 import { appointments } from './appointments'
 import { AppointmentFormContainerBasic } from './form/appointmentForm'
+import { withStyles } from '@material-ui/core/styles';
 import {
     Scheduler,
     DayView,
@@ -17,17 +18,18 @@ import {
     AppointmentTooltip,
     AppointmentForm,
     ConfirmationDialog,
-    DragDropProvider
+    DragDropProvider,
+    EditRecurrenceMenu
 } from '@devexpress/dx-react-scheduler-material-ui'
-
+import { Dialog, DialogContent, DialogActions, DialogTitle, DialogContentText, Button, Fab } from '@material-ui/core';
+import AddIcon from '@material-ui/icons/Add'
 
 const now = new Date()
 var dd = String(now.getDate()).padStart(2, '0');
 var mm = String(now.getMonth() + 1).padStart(2, '0'); //January is 0!
 var yyyy = now.getFullYear();
 
-var currentDate = yyyy + '-' + mm + '-' + dd + 'T' + now.getHours() + ':' + now.getMinutes()
-
+var currentDate = yyyy + '-' + mm + '-' + dd + 'T' + now.getHours() + ':' + now.getMinutes();
 
 const Appointment = ({
     children, style, ...restProps
@@ -44,13 +46,53 @@ const Appointment = ({
         </Appointments.Appointment>
     );
 
-const style = theme => ({
-    addButton: {
-        position: 'absolute',
-        bottom: theme.spacing(1) * 3,
-        right: theme.spacing(1) * 4,
+const containerStyles = theme => ({
+    container: {
+        width: theme.spacing(68),
+        padding: 0,
+        paddingBottom: theme.spacing(2),
+    },
+    content: {
+        padding: theme.spacing(2),
+        paddingTop: 0,
+    },
+    header: {
+        overflow: 'hidden',
+        paddingTop: theme.spacing(0.5),
+    },
+    closeButton: {
+        float: 'right',
+    },
+    buttonGroup: {
+        display: 'flex',
+        justifyContent: 'flex-end',
+        padding: theme.spacing(0, 2),
+    },
+    button: {
+        marginLeft: theme.spacing(2),
+    },
+    picker: {
+        marginRight: theme.spacing(2),
+        '&:last-child': {
+            marginRight: 0,
+        },
+        width: '50%',
+    },
+    wrapper: {
+        display: 'flex',
+        justifyContent: 'space-between',
+        padding: theme.spacing(1, 0),
+    },
+    icon: {
+        margin: theme.spacing(2, 0),
+        marginRight: theme.spacing(2),
+    },
+    textField: {
+        width: '100%',
     },
 });
+
+const AppointmentFormContainer = withStyles(containerStyles, { name: 'AppointmentFormContainer' })(AppointmentFormContainerBasic);
 
 class Schedule extends React.Component {
     constructor(props) {
@@ -75,10 +117,10 @@ class Schedule extends React.Component {
         this.onAddedAppointmentChange = this.onAddedAppointmentChange.bind(this);
 
         this.toogleConfirmationVisible = this.toogleConfirmationVisible.bind(this);
-        this.commitDeleteAppointment = this.commitDeleteAppoint.bind(this);
+        this.commitDeleteAppointment = this.commitDeleteAppointment.bind(this);
         this.toogleEditingFormVisibility = this.toogleEditingFormVisibility.bind(this);
 
-        this.appointmentForm = connectProps(AppointmentFormContainerBasic, () => {
+        this.appointmentForm = connectProps(AppointmentFormContainer, () => {
             const {
                 editingFormVisible,
                 editingAppointment,
@@ -103,10 +145,10 @@ class Schedule extends React.Component {
                 visible: editingFormVisible,
                 appointmentData: currentAppointment,
                 commitChanges: this.commitChanges,
-                visibleChanges: this.toogleEditingFormVisibility,
+                visibleChange: this.toogleEditingFormVisibility,
                 onEditingAppointmentChange: this.onEditingAppointmentChange,
                 cancelAppointment,
-            }       //!Maybe has ;
+            }
         });
     }
 
@@ -150,9 +192,36 @@ class Schedule extends React.Component {
         });
     }
 
+    setDeleteAppointment(id) {
+        this.setState({ deleteAppointmentId: id });
+    }
+
+    toogleEditingFormVisibility() {
+        const { editingFormVisible } = this.state;
+        this.setState({
+            editingFormVisible: !editingFormVisible
+        });
+    }
+
+    toogleConfirmationVisible() {
+        const { confirmationVisible } = this.state;
+        this.setState({ confirmationVisible: !confirmationVisible });
+    }
+
+    commitDeleteAppointment() {
+        this.setState(state => {
+            const { data, deletedAppointmentId } = state;
+            const nextData = data.filter(appointment => appointment.id !== deletedAppointmentId);
+
+            return { data: nextData, deletedAppointmentId: null }   //!May have ;
+        });
+
+        this.toogleConfirmationVisible();
+    }
+
 
     render() {
-        const { data, currentDate } = this.state;
+        const { data, currentDate, confirmationVisible, editingFormVisible } = this.state;
 
         return (
             <Paper>
@@ -161,10 +230,13 @@ class Schedule extends React.Component {
                 >
                     <ViewState
                         defaultCurrentDate={currentDate}
-                        defaultCurrentViewName='Week'
+                        defaultCurrentViewName='Month'
                     />
-                    <EditingState onCommitChanges={this.commitChanges} />
-                    <IntegratedEditing />
+                    <EditingState
+                        onCommitChanges={this.commitChanges}
+                        onEditingAppointmentChange={this.onEditingAppointmentChange}
+                        onAddedAppointmentChange={this.onAddedAppointmentChange} />
+                    <EditRecurrenceMenu />
 
                     <DayView
                         startDayHour={9}
@@ -186,8 +258,50 @@ class Schedule extends React.Component {
                         appointmentComponent={Appointment} />
                     <AppointmentTooltip showOpenButton showDeleteButton showCloseButton />
                     <DragDropProvider />
-                    <AppointmentForm />
+                    <AppointmentForm
+                        overlayComponent={this.appointmentForm}
+                        visible={editingFormVisible}
+                        onVisibilityChange={this.toogleEditingFormVisibility} />
                 </Scheduler>
+
+                <Dialog open={confirmationVisible} onClose={this.cancelDelete}>
+                    <DialogTitle>Delete Appointment</DialogTitle>
+                    <DialogContent>
+                        <DialogContentText>
+                            Are you sure you want to delete this appointment?
+                        </DialogContentText>
+                    </DialogContent>
+                    <DialogActions>
+                        <Button onClick={this.toogleConfirmationVisible}
+                            color="primary"
+                            cariant="outlined">
+                            Cancel
+                        </Button>
+                        <Button onClick={this.commitDeleteAppointment}
+                            color="secondary"
+                            variant="outlined">
+                            Delete
+                        </Button>
+                    </DialogActions>
+                </Dialog>
+
+                <Fab
+                    color="secondary"
+                    style={{
+                        position: 'fixed',
+                        bottom: 24,
+                        right: 32,
+                    }}
+                    onClick={() => {
+                        this.setState({ editingFormVisible: true });
+                        this.onEditingAppointmentChange(undefined);
+                        this.onAddedAppointmentChange({
+                            startDate: new Date(currentDate).setHours(9),
+                            endDate: new Date(currentDate).setHours(10)
+                        });
+                    }}>
+                    <AddIcon />
+                </Fab>
             </Paper >
         );
     }
