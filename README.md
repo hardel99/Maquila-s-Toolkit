@@ -1,5 +1,5 @@
 # Maquila's Toolkit
-Web app to calculate an aproximation of your salary
+Web app made with React to calculate an aproximation of your salary
 
 <h2>Recomended Extensions for VSCode</h2>
 <ul>

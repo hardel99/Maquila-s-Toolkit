@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba 1</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="hidden-img">
+        <img id="cover" src="418.jpg" alt="Nice try">
+    </div>
+    <div class="container">
+        <div class="signup-panel" id="sign">
+            <h2>SignUp!</h2>
+            <form action="nadaxd">
+                <ul>
+                    <li>
+                        <label for="nombre">Nombre:</label>
+                        <input type="text" name="nombre" id="nombre">
+                    </li>
+                    <li>
+                        <label for="email">E-mail:</label>
+                        <input type="email" name="email" id="email" placeholder="correo@example.com">
+                    </li>
+                    <li>
+                        <label for="pass">Contraseña:</label>
+                        <input type="password" name="password" id="pass">
+                    </li>
+                    <li>
+                        <span onClick="toLog()">or Login here!</span>
+                        <input type="button" value="SignUp">
+                    </li>
+                </ul>
+            </form>
+        </div>
+        <div class="login-panel" id="log">
+            <h2>Login!</h2>
+            <form action="nadaxd">
+                <ul>
+                    <li>
+                        <label for="email">E-mail:</label>
+                        <input type="email" name="email" id="email" placeholder="correo@example.com">
+                    </li>
+                    <li>
+                        <label for="pass">Contraseña:</label>
+                        <input type="password" name="password" id="pass">
+                    </li>
+                    <li>
+                        <span onClick="toSign()">or SignUp here!</span>
+                        <input type="button" value="Login">
+                    </li>
+                </ul>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+
+</html>

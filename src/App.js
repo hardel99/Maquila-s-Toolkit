@@ -4,7 +4,8 @@ import { Home, Login, SignUp } from './components'
 import { AuthProvider } from './firebase/Auth';
 import PrivateRoute from './firebase/PrivateRoute';
 
-import styles from './App.module.css'
+
+// import './App.module.css'
 
 const App = () => {
     return (
